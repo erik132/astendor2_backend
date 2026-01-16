@@ -3,6 +3,8 @@ package com.astendor.backend.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Immutable;
 
+import java.util.List;
+
 @Entity
 @Immutable
 @Table(name = "world_tiles_info")
@@ -29,6 +31,10 @@ public class WorldTilesInfo {
 
     @Column(name = "race_name")
     private String raceName;
+
+    @OneToMany
+    @JoinColumn(name = "tile_id", referencedColumnName = "tile_id", insertable = false, updatable = false)
+    private List<WorldTileHarvestInfo> harvestInfoList;
 
     public WorldTilesInfo() {
     }
@@ -87,5 +93,13 @@ public class WorldTilesInfo {
 
     public void setRaceName(String raceName) {
         this.raceName = raceName;
+    }
+
+    public List<WorldTileHarvestInfo> getHarvestInfoList() {
+        return harvestInfoList;
+    }
+
+    public void setHarvestInfoList(List<WorldTileHarvestInfo> harvestInfoList) {
+        this.harvestInfoList = harvestInfoList;
     }
 }

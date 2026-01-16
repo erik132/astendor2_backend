@@ -17,6 +17,9 @@ public class WorldTileHarvestInfo {
     @Column(name = "item_id")
     private Integer itemId;
 
+    @Column(name = "amount")
+    private Integer amount;
+
     @Column(name = "item_name")
     private String itemName;
 
@@ -45,5 +48,13 @@ public class WorldTileHarvestInfo {
 
     public void setItemName(String itemName) {
         this.itemName = itemName;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 }
