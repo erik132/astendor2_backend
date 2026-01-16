@@ -3,3 +3,18 @@ Create a spring boot project in this folder. Use maven to build it. We need 3 UR
 2. "/create_user" Users can use this URI to registrate a new user in the system. They need to provide a username, an email and a password for the registration to work.
 3. "/authtest" If the user has been previously successfully authenticated return a JSON response indicating everything is ok. Otherwise give a response showing them the login URI.
 Use Spring Security to implement everything authentication and user creation related. Also make sure the stored passwords are encrypted and salted. All new users must be created with the standard role. We will create admin registration some other time. We will be using the PostgreSQL dialect to talk to the database. The database itself is located at localhost:5432, username="warlord", password="dragonslayer". Database name to connect to is astendor. You should be able to access tables users, roles and user_roles. These should be enough to create this functionality. Once the code is written use maven to build it and test it by trying to create the following user: {"username":"Dean", "password":"winchester81", "email":"dean@hunting.com"}, authenticate that user and test "/authtest" URI too. If everything is successful keep that user in the database.
+
+
+In this folder there is a java spring project which uses maven. Create a new controller to handle querying information about worlds. Let's call it WorldsController. Add one URI "/worlds", which returns a list of worlds from a PostgreSQL database. Data can be read from view worlds_description. SQL scripts used to create the database can be found here: E:\le_claude\astendor2_database. This project is already configured to connect to the right database. The database itself is currently running.
+Test the URI you created. You will need to login first, because this URI will require authentication. Use username="Dean", password="winchester81".
+
+We need to expand this spring boot project by adding another URI to WorldsController. Lets call it /world_tiles_info. This is a get request and it requires world id as a parameter. Data is available in view world_tiles_info. SQL scripts used to create the database can be found here: E:\le_claude\astendor2_database. This project is already configured to connect to the right database. The database itself is currently running. Test the URI you created. You will need to login first, because this URI will require authentication. Use username="Dean", password="winchester81". This spring application is supposed to run on port 3015, do not change that.
+
+Add another URI "/world_tile_harvest_info" in the worldTiles controller. This works on a GET method and will accept tile_id as an input and will output in JSON format. The data can be found in the following database view.
+CREATE VIEW world_tile_harvest_info AS
+SELECT
+  tile_id,
+  item_id,
+  items.name AS item_name
+FROM world_harvests JOIN items ON world_harvests.item_id=items.id;
+If we get an empty set return a code 500 error. Build the result with maven, but do not run it.
