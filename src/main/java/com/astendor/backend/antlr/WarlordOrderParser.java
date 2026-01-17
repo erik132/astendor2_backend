@@ -19,8 +19,9 @@ public class WarlordOrderParser {
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
         OrderParser parser = new OrderParser(tokenStream);
         OrderParser.Warlord_orderContext tree = parser.warlord_order();
-        OrderVisitor visitor = new OrderVisitor();
+        OrderVisitor visitor = new OrderVisitor(tokenStream);
         visitor.visit(tree);
+
 
         return visitor.getOrders();
     }
