@@ -20,3 +20,22 @@ FROM world_harvests JOIN items ON world_harvests.item_id=items.id;
 If we get an empty set return a code 500 error. Build the result with maven, but do not run it.
 
 Expand the current java spring boot project, by adding Antlr support. Create 2 Antlr files OrderLexer.g4 and OrderGrammar.g4 and place them in the correct place. I will fill the contents myself. Also update the project pom.xml file so that maven could create a fully self contained jar file.
+
+Create a new URI "/set_warlord_orders" in WarlordController. The input is a warlord ID and a String containing the orders for that warlord. This is a post method. Make sure the orders are transmitted via JSON format. Store data in the following table:
+CREATE TABLE warlord_orders(
+  warlord_id INT NOT NULL,
+  order_text TEXT NOT NULL
+);
+Compile with maven, but do not run.
+
+Make a new URI "/join_world" in the WarlordController. This is a POST method. The input is world_id and race_id. The idea here is to make a new warlord entry in the warlords table which looks like this:
+CREATE TABLE warlords(
+  id SERIAL PRIMARY KEY,
+  world_id INT NOT NULL,
+  user_id INT NOT NULL,
+  race_id INT NOT NULL,
+  x INT NOT NULL,
+  y INT NOT NULL,
+  UNIQUE(world_id, user_id)
+);
+Get the user_id from the authentication. Currently set x and y values to 1 as a placeholder. Build with maven but do not run. Return an error if a new record could not be made.
