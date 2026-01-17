@@ -18,3 +18,5 @@ SELECT
   items.name AS item_name
 FROM world_harvests JOIN items ON world_harvests.item_id=items.id;
 If we get an empty set return a code 500 error. Build the result with maven, but do not run it.
+
+Expand the current java spring boot project, by adding Antlr support. Create 2 Antlr files OrderLexer.g4 and OrderGrammar.g4 and place them in the correct place. I will fill the contents myself. Also update the project pom.xml file so that maven could create a fully self contained jar file.
