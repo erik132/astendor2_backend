@@ -39,3 +39,11 @@ CREATE TABLE warlords(
   UNIQUE(world_id, user_id)
 );
 Get the user_id from the authentication. Currently set x and y values to 1 as a placeholder. Build with maven but do not run. Return an error if a new record could not be made.
+
+We need to expand the spring boot project in this folder by making 4 new URIS:
+1. "/craft_item" in ItemController, which is a POST method and accepts world_id, tile_id and blueprint_id and amount as inputs and saves them in table tile_crafting_queue.
+2. "/get_crafting_queue" in ItemController, which is a GET method, accepts world_id and tile_id as inputs and returns a List.
+3. "/train_unit" in UnitController, which is a POST method, accepts world_id, tile_id, template_id and amount as inputs and saves them in table tile_training_queue
+4. "/get_training_queue" in UnitController, which is a GET method, accepts world_id and tile_id as inputs and returns a List.
+Database schema is available in the following 2 files: E:\le_claude\astendor2_database\V2__items.sql and E:\le_claude\astendor2_database\V5__unitsAndInventories.sql . Build the project with maven, but do not run it.
+Make the post requests return success if there are no errors and code 500 if the database returned an error.
