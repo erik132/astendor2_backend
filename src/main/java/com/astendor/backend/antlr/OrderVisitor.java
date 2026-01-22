@@ -28,7 +28,15 @@ public class OrderVisitor extends OrderParserBaseVisitor<Object> {
 
     @Override
     public Object visitMove_order(OrderParser.Move_orderContext ctx) {
-        orders.add(new MoveOrder(getProperOrderText(ctx)));
+        Integer directionX = 0;
+        Integer directionY = 0;
+        switch (ctx.direction.getType()) {
+            case OrderLexer.EAST -> directionX = -1;
+            case OrderLexer.WEST -> directionX = 1;
+            case OrderLexer.NORTH -> directionY = -1;
+            case OrderLexer.SOUTH -> directionY = 1;
+        }
+        orders.add(new MoveOrder(getProperOrderText(ctx), directionX, directionY));
         return null;
     }
 

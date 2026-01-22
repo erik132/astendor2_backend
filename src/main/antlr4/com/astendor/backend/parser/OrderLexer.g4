@@ -30,11 +30,14 @@ CAMEL       : C A M E L;
 SHIELD      : S H I E L D;
 BOW         : B O W;
 SWORD       : S W O R D;
+SPEAR       : S P E A R;
 
 
 //Unit Nouns
 GRUNT       : G R U N T;
 ARCHER      : A R C H E R;
+SPEARMAN    : S P E A R M A N;
+HORSEMAN    : H O R S E M A N;
 
 // Token definitions
 WORD : LETTER+;

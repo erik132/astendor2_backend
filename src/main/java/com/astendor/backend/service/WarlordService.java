@@ -9,7 +9,6 @@ import com.astendor.backend.repository.WarlordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,15 +25,49 @@ public class WarlordService {
         warlordOrdersRepository.save(warlordOrders);
     }
 
-    public List<WarlordOrder> processWarlordOrders(Integer warlordId) {
-        Optional<WarlordOrders> opOrders = warlordOrdersRepository.findById(warlordId);
-        if (opOrders.isPresent()) {
-            return processWarlordOrders(opOrders.get());
-        }
-        return new ArrayList<>();
+    public void deleteWarlordOrders(Integer warlordId){
+        warlordOrdersRepository.deleteById(warlordId);
     }
 
-    private List<WarlordOrder> processWarlordOrders(WarlordOrders orders) {
+    public void processWorldWarlordOrders(Integer worldId) {
+        List<Warlord> warlords = warlordRepository.findByWorldId(worldId);
+        for (Warlord warlord : warlords) {
+            if (!warlord.isWarlordBusy()) {
+                List<WarlordOrder> orders = parseWarlordOrders(warlord.getId());
+                if (orders == null || orders.isEmpty()) {
+                    continue;
+                }
+                String returningOrders = null;
+                int unfulfilledOrdersStart = 0;
+                for (WarlordOrder order : orders) {
+                    boolean result = order.carryOutOrder(warlordRepository, warlord.getId());
+                    if (result) {
+                        unfulfilledOrdersStart++;
+                    } else {
+                        break;
+                    }
+                    if (order.isOrderFullTurn()) {
+                        break;
+                    }
+                }
+                if (unfulfilledOrdersStart != orders.size()) {
+                    returningOrders = WarlordOrderParser.ordersBackToString(orders.subList(unfulfilledOrdersStart, orders.size()));
+                }
+                if (returningOrders != null) {
+                    saveWarlordOrders(new WarlordOrders(warlord.getId(), returningOrders));
+                } else {
+                    deleteWarlordOrders(warlord.getId());
+                }
+            }
+        }
+    }
+
+    public List<WarlordOrder> parseWarlordOrders(Integer warlordId) {
+        Optional<WarlordOrders> opOrders = warlordOrdersRepository.findById(warlordId);
+        return opOrders.map(this::parseWarlordOrders).orElse(null);
+    }
+
+    private List<WarlordOrder> parseWarlordOrders(WarlordOrders orders) {
         WarlordOrderParser parser = new WarlordOrderParser();
         List<WarlordOrder> orderList = parser.parserOrders(orders.getOrderText());
         return orderList;

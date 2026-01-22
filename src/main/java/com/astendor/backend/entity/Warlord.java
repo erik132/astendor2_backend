@@ -28,6 +28,9 @@ public class Warlord {
     @Column(name = "y", nullable = false)
     private Integer y;
 
+    @Column(name = "is_warlord_busy", nullable = false)
+    private boolean isWarlordBusy;
+
     public Warlord() {
     }
 
@@ -85,5 +88,13 @@ public class Warlord {
 
     public void setY(Integer y) {
         this.y = y;
+    }
+
+    public boolean isWarlordBusy() {
+        return isWarlordBusy;
+    }
+
+    public void setWarlordBusy(boolean warlordBusy) {
+        isWarlordBusy = warlordBusy;
     }
 }

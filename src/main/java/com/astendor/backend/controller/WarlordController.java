@@ -35,7 +35,7 @@ public class WarlordController {
 
     @GetMapping("/order_test")
     public ResponseEntity<List<WarlordOrder>> testWarlordOrders(@RequestParam("warlord_id") Integer warlordId){
-        return ResponseEntity.ok(warlordService.processWarlordOrders(warlordId));
+        return ResponseEntity.ok(warlordService.parseWarlordOrders(warlordId));
     }
 
     @PostMapping("/join_world")

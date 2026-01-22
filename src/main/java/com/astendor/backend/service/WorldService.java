@@ -34,4 +34,16 @@ public class WorldService {
     public List<WorldTileHarvestInfo> getWorldTileHarvestInfo(Integer tileId) {
         return worldTileHarvestInfoRepository.findByTileId(tileId);
     }
+
+    public void processWorldHarvests(Integer worldId) {
+        worldTilesInfoRepository.processHarvests(worldId);
+    }
+
+    public void processWorldCraftingQueues(Integer worldId) {
+        worldTilesInfoRepository.processCraftingQueues(worldId);
+    }
+
+    public void processWorldTrainingQueues(Integer worldId) {
+        worldTilesInfoRepository.processTrainingQueues(worldId);
+    }
 }

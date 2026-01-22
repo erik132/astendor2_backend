@@ -3,6 +3,7 @@ package com.astendor.backend.controller;
 import com.astendor.backend.entity.WorldDescription;
 import com.astendor.backend.entity.WorldTileHarvestInfo;
 import com.astendor.backend.entity.WorldTilesInfo;
+import com.astendor.backend.service.TurnService;
 import com.astendor.backend.service.WorldService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,9 @@ public class WorldsController {
 
     @Autowired
     private WorldService worldService;
+
+    @Autowired
+    private TurnService turnService;
 
     @GetMapping("/worlds")
     public ResponseEntity<List<WorldDescription>> getWorlds() {
@@ -44,5 +48,11 @@ public class WorldsController {
                     .body(Map.of("message", "Tile not found"));
         }
         return ResponseEntity.ok(harvestInfo);
+    }
+
+    @GetMapping("/end_turn")
+    public ResponseEntity<?> passTurn(@RequestParam("world_id") Integer worldId){
+        turnService.endTurn(worldId);
+        return ResponseEntity.ok("Turn ended");
     }
 }

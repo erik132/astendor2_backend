@@ -9,6 +9,19 @@ import java.util.List;
 
 public class WarlordOrderParser {
 
+    public static String ordersBackToString(List<WarlordOrder> orders) {
+        if (orders == null || orders.isEmpty()) {
+            return null;
+        }
+        StringBuilder builder = new StringBuilder();
+        builder.append(orders.getFirst().getOriginalText());
+        int size = orders.size();
+        for (int i = 1; i < size; i++) {
+            builder.append(' ').append(orders.get(i).getOriginalText());
+        }
+        return builder.toString();
+    }
+
     public List<WarlordOrder> parserOrders(String orders) {
         System.out.println("Starting to parse orders");
         if (orders == null || orders.isEmpty()) {

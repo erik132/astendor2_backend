@@ -1,5 +1,7 @@
 package com.astendor.backend.antlr;
 
+import com.astendor.backend.repository.WarlordRepository;
+
 public class TakeItemOrder extends TakeOrder{
 
 
@@ -8,7 +10,7 @@ public class TakeItemOrder extends TakeOrder{
     }
 
     @Override
-    boolean carryOutOrder() {
+    public boolean carryOutOrder(WarlordRepository repository, Integer warlordId) {
         return false;
     }
 }

@@ -14,10 +14,12 @@ take_order
 unit_name
     : GRUNT
     | ARCHER
+    | SPEARMAN
+    | HORSEMAN
     ;
 
 item_name
-    : IRON ORE
+    : IRON
     | COAL
     | WOOD
     | HORSE
@@ -30,4 +32,5 @@ item_name
     | WOODEN SHIELD
     | SHORT BOW
     | IRON SWORD
+    | SPEAR
     ;

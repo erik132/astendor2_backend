@@ -10,4 +10,9 @@ public abstract class TakeOrder extends WarlordOrder{
         this.amount = amount;
         this.objectName = objectName;
     }
+
+    @Override
+    public boolean isOrderFullTurn() {
+        return false;
+    }
 }
