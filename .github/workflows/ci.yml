@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      - name: Build app (without tests)
+        run: mvn -B -ntp clean install -DskipTests
+
+      - name: Run tests
+        run: mvn -B -ntp test
+
+      - name: Sonar analysis (SonarQube Cloud)
+        env:
+          SONAR_TOKEN: 90af0a9021edb74ac45704ab0e00178817bce037
+        run: |
+          mvn -B -ntp sonar:sonar \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.organization=erik132 \
+            -Dsonar.projectKey=erik132_astendor2_backend
+
