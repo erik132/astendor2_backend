@@ -32,8 +32,9 @@ jobs:
       - name: Sonar analysis (SonarQube Cloud)
         env:
           SONAR_TOKEN: 90af0a9021edb74ac45704ab0e00178817bce037
-        run: mvn -B -ntp sonar:sonar \
-          -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.organization=erik132 \
-          -Dsonar.projectKey=erik132_astendor2_backend
+        run: |
+          mvn -B -ntp sonar:sonar \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.organization=erik132 \
+            -Dsonar.projectKey=erik132_astendor2_backend
 
